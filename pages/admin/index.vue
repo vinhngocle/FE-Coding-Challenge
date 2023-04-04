@@ -2,27 +2,36 @@
   <div class="mt-3">
     <div class="text-center mb-3">
       <b-button-group size="sm">
-      <b-button>Save</b-button>
-      <b-button>Undo</b-button>
-      <b-button>Redo</b-button>
-      <b-button>Export</b-button>
-      <b-button>Import</b-button>
-      <b-button @click="gotoConsumer">View</b-button>
-    </b-button-group>
+        <b-button>Save</b-button>
+        <b-button>Undo</b-button>
+        <b-button>Redo</b-button>
+        <b-button>Export</b-button>
+        <b-button>Import</b-button>
+        <b-button @click="gotoConsumer">View</b-button>
+      </b-button-group>
     </div>
     <!-- <hr/> -->
     <!-- <draggable :id="paragraph" title="Paragraph"/> -->
     <!-- <draggable :id="button" title="Button"/> -->
     <div class="page-drag" @mousemove="mouseMove">
       <div class="page-left">
-        <draggable @dragging="dragging" title="Paragraph"/>
-        <draggable @dragging="dragging" title="Button"/>
+        <draggable @dragging="dragging" title="Paragraph" />
+        <draggable @dragging="dragging" title="Button" />
       </div>
       <div class="page-right">
-        <p>Mouse: ({{ clientX }}, {{ clientY }})</p>
-        <p>Drapping: {{ drapStatus }}</p>
-        <p>Instances: <span id="demo"></span></p>
-        <p>Config: </p>
+        <div class="row mt-3">
+          <div class="col-md-6">
+            <p>Mouse: ({{ clientX }}, {{ clientY }})</p>
+            <p>Drapping: {{ drapStatus }}</p>
+            <p>Instances: {{ instances }}</p>
+            <p>Config:</p>
+          </div>
+          <div class="col-md-6">
+            <b-button size="sm">button</b-button>
+            <p>paragraph</p>
+          </div>
+        </div>
+        <dropzone @draggingRemove="draggingRemove" @countDrops="countDrops" />
       </div>
       <div class="page-clear"></div>
     </div>
@@ -30,7 +39,8 @@
 </template>
 
 <script>
-import Draggable from "../../components/Draggable.vue"
+import Draggable from "../../components/Draggable.vue";
+import Dropzone from "../../components/Dropzone.vue";
 export default {
   name: "Admin",
   data() {
@@ -44,10 +54,11 @@ export default {
         props: {},
       },
       drapStatus: "",
-    }
+    };
   },
   components: {
-    Draggable
+    Draggable,
+    Dropzone,
   },
   methods: {
     gotoConsumer() {
@@ -60,9 +71,16 @@ export default {
     },
     dragging(value) {
       this.drapStatus = value;
-      console.log('value', value);
-    }
-  }
+      console.log("value", value);
+    },
+    draggingRemove(value) {
+      this.drapStatus = value;
+      console.log("draggingRemove", value);
+    },
+    countDrops(value) {
+      this.instances = value;
+    },
+  },
 };
 </script>
 

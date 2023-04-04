@@ -12,8 +12,8 @@
         {{ title }}
       </p>
     </div>
-    <!-- <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p> -->
-    <span id="demo"></span>
+    <!-- <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p>
+    <span id="demo"></span> -->
   </div>
 </template>
 
@@ -45,28 +45,31 @@ export default {
       event.dataTransfer.setData("Text", target.id);
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
+      console.log('handleDragStart', event);
     },
     handleDragging(event) {
+      let count = 0;
       if (this.title === "Button") {
         this.$emit("dragging", "ElementButton")
-        console.log("button");
+        count++;
+        console.log('count', count);
       } else {
         this.$emit("dragging", "ElementParagraph")
-        console.log("Paragraph");
       }
-      document.getElementById("demo").innerHTML =
-        "The p element is being dragged";
+      // document.getElementById("demo").innerHTML =
+      //   "The p element is being dragged";
     },
     allowDrop(event) {
       event.preventDefault();
     },
     handleDrop(event) {
-      const target = event.target;
+      // const target = event.target;
       event.preventDefault();
-      const data = event.dataTransfer.getData("Text");
-      target.appendChild(document.getElementById(data));
+      // const data = event.dataTransfer.getData("Text");
+      // target.appendChild(document.getElementById(data));
       event.dataTransfer.clearData();
-      document.getElementById("demo").innerHTML = "The p element was dropped";
+      console.log('drop');
+      // document.getElementById("demo").innerHTML = "The p element was dropped";
     },
   },
 };
