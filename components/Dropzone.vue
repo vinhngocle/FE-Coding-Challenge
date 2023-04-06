@@ -39,7 +39,6 @@ export default {
       // const data = event.dataTransfer.getData("drag-id-paragraph")
       // console.log('data target.id drop', data);
       // target.appendChild(document.getElementById(data));
-      console.log('target.i', target.id);
 
 
       // if (target.id === "drag-id-paragraph") {
@@ -55,7 +54,6 @@ export default {
       // }
 
       const data = event.dataTransfer.getData("drag-id-paragraph");
-      console.log('data: ' + data);
       // target.appendChild(document.getElementById(data));
 
 
@@ -67,8 +65,6 @@ export default {
       this.countDrops++;
       this.$emit("draggingRemove", "");
       this.$emit("countDrops", this.countDrops);
-
-      console.log("event drop", event);
     },
   },
 };

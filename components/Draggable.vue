@@ -62,47 +62,74 @@ export default {
       if (target.id === "drag-id-paragraph") {
         const node = document.createElement("p");
 
-        node.addEventListener('click', function handleClickParagraph(event) {
-          console.log('element clicked', event);
-          document.getElementById("demo-input").innerHTML = ''
+        node.addEventListener("click", function handleClickParagraph(event) {
+          console.log("element clicked", event);
+          document.getElementById("demo-input").innerHTML = "";
 
           const page = document.createElement("p");
           const input = document.createElement("input");
-          page.textContent = "Paragraph Text"
+          page.textContent = "Paragraph Text";
           input.setAttribute("id", "input-paragraph");
           document.getElementById("demo-paragraph").appendChild(page);
           document.getElementById("demo-paragraph").appendChild(input);
+
+          // event handlers input
+          const inputParagraph = document.querySelector("#input-paragraph");
+          const resultParagraph = document.querySelector("#ele-paragraph");
+          inputParagraph.addEventListener("input", function () {
+            resultParagraph.textContent = this.value;
+          });
         });
 
         // const textnode = document.createTextNode("Paragraph");
         // node.appendChild(textnode);
         node.textContent = "Paragraph";
-        node.setAttribute("class", "ele-paragraph");
+        node.setAttribute("id", "ele-paragraph");
 
         document.getElementById("demo").appendChild(node);
-      } else {
+      }
+
+      if (target.id === "drag-id-button"){
         const node = document.createElement("button");
 
-        node.addEventListener('click', function handleClickButton(event) {
-          console.log('Button clicked', event);
-          document.getElementById("demo-paragraph").innerHTML = ''
+        node.addEventListener("click", function handleClickButton(event) {
+          console.log("Button clicked", event);
+          document.getElementById("demo-paragraph").innerHTML = "";
 
           const label1 = document.createElement("p");
           const input1 = document.createElement("input");
           const label2 = document.createElement("p");
           const input2 = document.createElement("input");
-          label1.textContent = "Button Text"
-          label2.textContent = "Alert Message"
+
+          label1.textContent = "Button Text";
+          input1.setAttribute("id", "input-button-text");
+          label2.textContent = "Alert Message";
+          input2.setAttribute("id", "input-alert-message");
+
           document.getElementById("demo-input").appendChild(label1);
           document.getElementById("demo-input").appendChild(input1);
           document.getElementById("demo-input").appendChild(label2);
           document.getElementById("demo-input").appendChild(input2);
+
+          // event handlers input
+          const inputButtonText = document.querySelector("#input-button-text");
+          const resultButtonText = document.querySelector("#ele-button");
+          inputButtonText.addEventListener("input", function () {
+            resultButtonText.textContent = this.value;
+          });
+
+          const inputAlertMessage = document.querySelector("#input-alert-message");
+          const resultAlertMessage = document.querySelector("#ele-button");
+          inputAlertMessage.addEventListener("input", function () {
+            // resultButtonText.textContent = this.value;
+            console.log('alert message', this.value);
+          });
         });
 
         // const textnode = document.createTextNode("Button");
         // node.appendChild(textnode);
         node.textContent = "Button";
-        node.setAttribute("class", "ele-button");
+        node.setAttribute("id", "ele-button");
 
         document.getElementById("demo").appendChild(node);
       }
