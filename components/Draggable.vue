@@ -11,8 +11,6 @@
         {{ title }}
       </p>
     </div>
-    <!-- <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p> -->
-    <!-- <span id="demo"></span> -->
   </div>
 </template>
 
@@ -52,12 +50,9 @@ export default {
   methods: {
     handleDragStart(event) {
       const target = event.target;
-      // console.log('target.id', target.id);
-      // event.dataTransfer.setData("Text", target.id);
       event.dataTransfer.setData("drag-id", target.id);
       event.dataTransfer.dropEffect = "move";
       event.dataTransfer.effectAllowed = "move";
-      console.log("handleDragStart", event);
 
       if (target.id === "drag-id-paragraph") {
         const node = document.createElement("p");
@@ -81,15 +76,13 @@ export default {
           });
         });
 
-        // const textnode = document.createTextNode("Paragraph");
-        // node.appendChild(textnode);
         node.textContent = "Paragraph";
         node.setAttribute("id", "ele-paragraph");
 
         document.getElementById("demo").appendChild(node);
       }
 
-      if (target.id === "drag-id-button"){
+      if (target.id === "drag-id-button") {
         const node = document.createElement("button");
 
         node.addEventListener("click", function handleClickButton(event) {
@@ -118,16 +111,16 @@ export default {
             resultButtonText.textContent = this.value;
           });
 
-          const inputAlertMessage = document.querySelector("#input-alert-message");
+          const inputAlertMessage = document.querySelector(
+            "#input-alert-message"
+          );
           const resultAlertMessage = document.querySelector("#ele-button");
           inputAlertMessage.addEventListener("input", function () {
             // resultButtonText.textContent = this.value;
-            console.log('alert message', this.value);
+            console.log("alert message", this.value);
           });
         });
 
-        // const textnode = document.createTextNode("Button");
-        // node.appendChild(textnode);
         node.textContent = "Button";
         node.setAttribute("id", "ele-button");
 
@@ -137,27 +130,16 @@ export default {
     handleDragging(event) {
       if (this.title === "Button") {
         this.$emit("dragging", "ElementButton");
-        // this.countButton++;
-        // console.log('this.countButton', this.countButton);
       } else {
         this.$emit("dragging", "ElementParagraph");
-        // this.countParagraph++;
-        // console.log('countParagraph', this.countParagraph);
       }
-      // document.getElementById("demo").innerHTML =
-      //   "The p element is being dragged";
     },
     allowDrop(event) {
       event.preventDefault();
     },
     handleDrop(event) {
-      // const target = event.target;
       event.preventDefault();
-      // const data = event.dataTransfer.getData("Text");
-      // target.appendChild(document.getElementById(data));
       event.dataTransfer.clearData();
-      console.log("drop started");
-      // document.getElementById("demo").innerHTML = "The p element was dropped";
     },
   },
 };

@@ -35,30 +35,6 @@ export default {
     },
     handleDrop(event) {
       event.preventDefault();
-      const target = event.target;
-      // const data = event.dataTransfer.getData("drag-id-paragraph")
-      // console.log('data target.id drop', data);
-      // target.appendChild(document.getElementById(data));
-
-
-      // if (target.id === "drag-id-paragraph") {
-        // const node = document.createElement("div");
-        // const textnode = document.createTextNode("Paragraph");
-        // node.appendChild(textnode);
-        // document.getElementById("demo").appendChild(node)
-      // } else {
-      //   const node = document.createElement("button");
-      //   const textnode = document.createTextNode("Button");
-      //   node.appendChild(textnode);
-      //   document.getElementById("demo").appendChild(node)
-      // }
-
-      const data = event.dataTransfer.getData("drag-id-paragraph");
-      // target.appendChild(document.getElementById(data));
-
-
-      // document.getElementById("demo").appendChild(node);
-
       event.dataTransfer.clearData();
 
       if (event.stopPropagation) event.stopPropagation();
