@@ -10,28 +10,48 @@
         <b-button @click="gotoConsumer">View</b-button>
       </b-button-group>
     </div>
-    <!-- <hr/> -->
-    <!-- <draggable :id="paragraph" title="Paragraph"/> -->
-    <!-- <draggable :id="button" title="Button"/> -->
     <div class="page-drag" @mousemove="mouseMove">
       <div class="page-left">
-        <draggable @dragging="dragging" title="Paragraph" />
-        <draggable @dragging="dragging" title="Button" />
+        <draggable id="drag-id-paragraph" @dragging="dragging" title="Paragraph" />
+        <draggable id="drag-id-button" @dragging="dragging" title="Button" />
       </div>
       <div class="page-right">
         <div class="row mt-3">
           <div class="col-md-6">
             <p>Mouse: ({{ clientX }}, {{ clientY }})</p>
-            <p>Drapping: {{ drapStatus }}</p>
+            <p>Drapping: {{ dragStatus }}</p>
             <p>Instances: {{ instances }}</p>
-            <p>Config:</p>
+            <p>Config: {{ config }}</p>
           </div>
           <div class="col-md-6">
-            <b-button size="sm">button</b-button>
-            <p>paragraph</p>
+            <!-- <b-button size="sm">button</b-button>
+            <p>paragraph</p> -->
+            <div id="demo"></div>
           </div>
         </div>
-        <dropzone @draggingRemove="draggingRemove" @countDrops="countDrops" />
+        <div class="col-md-12">
+          <dropzone @draggingRemove="draggingRemove" @countDrops="countDrops" />
+        </div>
+        <div id="page-show-input">
+          <!-- <div class="col-sm-3">
+            <p>Paragraph Text</p>
+            <b-form-input v-model="paragraphText"></b-form-input>
+          </div>
+          <div class="col-sm-3">
+            <p>Button Text</p>
+            <b-form-input v-model="buttonText"></b-form-input>
+          </div>
+          <div class="col-sm-3">
+            <p>Alert Message</p>
+            <b-form-input v-model="message"></b-form-input>
+          </div> -->
+          <div class="col-sm-3">
+            <div id="demo-paragraph"></div>
+          </div>
+          <div class="col-sm-3">
+            <div id="demo-input"></div>
+          </div>
+        </div>
       </div>
       <div class="page-clear"></div>
     </div>
@@ -51,9 +71,15 @@ export default {
       config: {
         id: "id0.123123123",
         component: "ElementParagraph",
-        props: {},
+        props: {
+          text: "",
+          message: "",
+        },
       },
-      drapStatus: "",
+      dragStatus: "",
+      paragraphText: "",
+      buttonText: "",
+      message: "",
     };
   },
   components: {
@@ -70,12 +96,22 @@ export default {
       this.clientY = event.clientY;
     },
     dragging(value) {
-      this.drapStatus = value;
+      this.dragStatus = value;
       console.log("value", value);
+      // if (value === "ElementParagraph") {
+      //   const node = document.createElement("div");
+      //   const textnode = document.createTextNode("Paragraph");
+      //   node.appendChild(textnode);
+      //   document.getElementById("demo").appendChild(node)
+      // } else {
+      //   const node = document.createElement("button");
+      //   const textnode = document.createTextNode("Button");
+      //   node.appendChild(textnode);
+      //   document.getElementById("demo").appendChild(node)
+      // }
     },
     draggingRemove(value) {
-      this.drapStatus = value;
-      console.log("draggingRemove", value);
+      this.dragStatus = value;
     },
     countDrops(value) {
       this.instances = value;

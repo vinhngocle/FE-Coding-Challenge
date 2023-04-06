@@ -1,5 +1,6 @@
 <template>
   <div class="mt-3">
+    <span id="demo"></span>
     <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p>
   </div>
 </template>
@@ -34,6 +35,32 @@ export default {
     },
     handleDrop(event) {
       event.preventDefault();
+      const target = event.target;
+      // const data = event.dataTransfer.getData("drag-id-paragraph")
+      // console.log('data target.id drop', data);
+      // target.appendChild(document.getElementById(data));
+      console.log('target.i', target.id);
+
+
+      // if (target.id === "drag-id-paragraph") {
+        // const node = document.createElement("div");
+        // const textnode = document.createTextNode("Paragraph");
+        // node.appendChild(textnode);
+        // document.getElementById("demo").appendChild(node)
+      // } else {
+      //   const node = document.createElement("button");
+      //   const textnode = document.createTextNode("Button");
+      //   node.appendChild(textnode);
+      //   document.getElementById("demo").appendChild(node)
+      // }
+
+      const data = event.dataTransfer.getData("drag-id-paragraph");
+      console.log('data: ' + data);
+      // target.appendChild(document.getElementById(data));
+
+
+      // document.getElementById("demo").appendChild(node);
+
       event.dataTransfer.clearData();
 
       if (event.stopPropagation) event.stopPropagation();
@@ -53,8 +80,7 @@ export default {
 }
 .droptarget {
   width: 100%;
-  height: 237px;
-  margin: 0 15px 15px 15px;
+  height: 200px;
   padding: 10px;
   border: 1px solid #aaaaaa;
 }

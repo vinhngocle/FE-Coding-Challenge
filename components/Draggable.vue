@@ -1,19 +1,18 @@
 <template>
   <div class="mt-3">
-    <div class="droptarget" @drop="handleDrop" @dragover="allowDrop">
+    <div class="droptarget">
       <p
-        id="dragtarget"
+        :id="id"
+        draggable="true"
         @dragstart="handleDragStart"
         @drag="handleDragging"
-        draggable="true"
-        @drop.prevent="handleDrop"
         @dragover.prevent
       >
         {{ title }}
       </p>
     </div>
-    <!-- <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p>
-    <span id="demo"></span> -->
+    <!-- <p class="droptarget" @drop="handleDrop" @dragover="allowDrop"></p> -->
+    <!-- <span id="demo"></span> -->
   </div>
 </template>
 
@@ -23,6 +22,14 @@ export default {
   name: "Draggable",
   props: {
     title: {
+      type: String,
+      default: "",
+    },
+    type: {
+      type: String,
+      default: "",
+    },
+    id: {
       type: String,
       default: "",
     },
@@ -37,24 +44,78 @@ export default {
         component: "ElementParagraph",
         props: {},
       },
+
+      countParagraph: 0,
+      countButton: 0,
     };
   },
   methods: {
     handleDragStart(event) {
       const target = event.target;
-      event.dataTransfer.setData("Text", target.id);
-      event.dataTransfer.dropEffect = 'move'
-      event.dataTransfer.effectAllowed = 'move'
-      console.log('handleDragStart', event);
+      // console.log('target.id', target.id);
+      // event.dataTransfer.setData("Text", target.id);
+      event.dataTransfer.setData("drag-id", target.id);
+      event.dataTransfer.dropEffect = "move";
+      event.dataTransfer.effectAllowed = "move";
+      console.log("handleDragStart", event);
+
+      if (target.id === "drag-id-paragraph") {
+        const node = document.createElement("p");
+
+        node.addEventListener('click', function handleClickParagraph(event) {
+          console.log('element clicked', event);
+          document.getElementById("demo-input").innerHTML = ''
+
+          const page = document.createElement("p");
+          const input = document.createElement("input");
+          page.textContent = "Paragraph Text"
+          input.setAttribute("id", "input-paragraph");
+          document.getElementById("demo-paragraph").appendChild(page);
+          document.getElementById("demo-paragraph").appendChild(input);
+        });
+
+        // const textnode = document.createTextNode("Paragraph");
+        // node.appendChild(textnode);
+        node.textContent = "Paragraph";
+        node.setAttribute("class", "ele-paragraph");
+
+        document.getElementById("demo").appendChild(node);
+      } else {
+        const node = document.createElement("button");
+
+        node.addEventListener('click', function handleClickButton(event) {
+          console.log('Button clicked', event);
+          document.getElementById("demo-paragraph").innerHTML = ''
+
+          const label1 = document.createElement("p");
+          const input1 = document.createElement("input");
+          const label2 = document.createElement("p");
+          const input2 = document.createElement("input");
+          label1.textContent = "Button Text"
+          label2.textContent = "Alert Message"
+          document.getElementById("demo-input").appendChild(label1);
+          document.getElementById("demo-input").appendChild(input1);
+          document.getElementById("demo-input").appendChild(label2);
+          document.getElementById("demo-input").appendChild(input2);
+        });
+
+        // const textnode = document.createTextNode("Button");
+        // node.appendChild(textnode);
+        node.textContent = "Button";
+        node.setAttribute("class", "ele-button");
+
+        document.getElementById("demo").appendChild(node);
+      }
     },
     handleDragging(event) {
-      let count = 0;
       if (this.title === "Button") {
-        this.$emit("dragging", "ElementButton")
-        count++;
-        console.log('count', count);
+        this.$emit("dragging", "ElementButton");
+        // this.countButton++;
+        // console.log('this.countButton', this.countButton);
       } else {
-        this.$emit("dragging", "ElementParagraph")
+        this.$emit("dragging", "ElementParagraph");
+        // this.countParagraph++;
+        // console.log('countParagraph', this.countParagraph);
       }
       // document.getElementById("demo").innerHTML =
       //   "The p element is being dragged";
@@ -68,7 +129,7 @@ export default {
       // const data = event.dataTransfer.getData("Text");
       // target.appendChild(document.getElementById(data));
       event.dataTransfer.clearData();
-      console.log('drop');
+      console.log("drop started");
       // document.getElementById("demo").innerHTML = "The p element was dropped";
     },
   },
