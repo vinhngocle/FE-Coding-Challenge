@@ -52,7 +52,7 @@ export default {
 }
 .droptarget {
   width: 100%;
-  height: 200px;
+  height: 288px;
   padding: 10px;
   border: 1px solid #aaaaaa;
 }

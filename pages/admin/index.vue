@@ -17,15 +17,23 @@
           @dragging="dragging"
           title="Paragraph"
         />
-        <draggable id="drag-id-button" @dragging="dragging" title="Button" />
+        <draggable
+          id="drag-id-button"
+          @dragging="dragging"
+          title="Button"
+          @textParagraph="textParagraph"
+        />
       </div>
       <div class="page-right">
         <div class="row mt-3">
           <div class="col-md-6">
-            <p>Mouse: ({{ clientX }}, {{ clientY }})</p>
-            <p>Drapping: {{ dragStatus }}</p>
-            <p>Instances: {{ instances }}</p>
-            <p>Config: {{ config }}</p>
+            <div>Mouse: ({{ clientX }}, {{ clientY }})</div>
+            <div>Drapping: {{ dragStatus }}</div>
+            <div>Instances: {{ instances }}</div>
+            <div>
+              Config:
+              <span id="show-config"></span>
+            </div>
           </div>
           <div class="col-md-6">
             <div id="demo"></div>
@@ -94,6 +102,10 @@ export default {
     countDrops(value) {
       this.instances = value;
     },
+    textParagraph(value) {
+      console.log('textParagraph', value);
+      this.configs.props.text = value;
+    }
   },
 };
 </script>

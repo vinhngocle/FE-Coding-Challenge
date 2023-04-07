@@ -37,11 +37,11 @@ export default {
       clientX: 0,
       clientY: 0,
       instances: 0,
-      config: {
-        id: "id0.123123123",
-        component: "ElementParagraph",
-        props: {},
-      },
+      // config: {
+      //   id: "id0.123123123",
+      //   component: "ElementParagraph",
+      //   props: {},
+      // },
 
       countParagraph: 0,
       countButton: 0,
@@ -61,6 +61,21 @@ export default {
           console.log("element clicked", event);
           document.getElementById("demo-input").innerHTML = "";
 
+          const config = {
+            id: "id0.123123123",
+            component: "ElementParagraph",
+            props: {
+              text: ""
+            },
+            get getText() {
+                return "text:" + this.props.text;
+              },
+            set setText(text) {
+              this.props.text = text;
+            }
+          }
+          document.getElementById("show-config").innerHTML = JSON.stringify(config);
+
           const page = document.createElement("p");
           const input = document.createElement("input");
           page.textContent = "Paragraph Text";
@@ -68,11 +83,14 @@ export default {
           document.getElementById("demo-paragraph").appendChild(page);
           document.getElementById("demo-paragraph").appendChild(input);
 
+
           // event handlers input
           const inputParagraph = document.querySelector("#input-paragraph");
           const resultParagraph = document.querySelector("#ele-paragraph");
           inputParagraph.addEventListener("input", function () {
             resultParagraph.textContent = this.value;
+            config.setText = this.value;
+            document.getElementById("show-config").innerHTML = config.props.text;
           });
         });
 
@@ -88,6 +106,13 @@ export default {
         node.addEventListener("click", function handleClickButton(event) {
           console.log("Button clicked", event);
           document.getElementById("demo-paragraph").innerHTML = "";
+
+          const config = {
+            id: "id0.123123123",
+            component: "ElementButton",
+            props: {},
+          }
+          document.getElementById("show-config").innerHTML = JSON.stringify(config);
 
           const label1 = document.createElement("p");
           const input1 = document.createElement("input");
